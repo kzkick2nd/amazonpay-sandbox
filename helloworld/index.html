@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello AmazonPay</title>
+    <!-- 1. Add Amazon Script -->
+    <script type='text/javascript'>
+        window.onAmazonLoginReady = function () {
+            amazon.Login.setClientId('CLIENT-ID');
+        };
+        window.onAmazonPaymentsReady = function () {
+            showButton();
+        };
+    </script>
 </head>
 <body>
     <h1>INIT</h1>
