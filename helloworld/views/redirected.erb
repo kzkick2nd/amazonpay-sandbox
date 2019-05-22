@@ -33,7 +33,8 @@
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.
                 orderReference.getAmazonOrderReferenceId();
-                console.log(orderReference.getAmazonOrderReferenceId());
+                // ajax で認証し取得した Id を form に渡す
+                document.getElementById('orderReferenceId').value = orderReference.getAmazonOrderReferenceId();
             },
             onAddressSelect: function(orderReference) {
                 // Replace the following code with the action that you want
@@ -86,5 +87,9 @@
             }).bind("walletWidgetDiv");
         }
     </script>
+    <form action="/pay" method="POST">
+        <input type="hidden" id="orderReferenceId" name="orderReferenceId">
+        <input type="submit" value="決済POST">
+    </form>
 </body>
 </html>
