@@ -9,3 +9,7 @@ end
 get '/' do
   erb :index
 end
+
+get '/redirected' do
+  "Hello World"
+end
