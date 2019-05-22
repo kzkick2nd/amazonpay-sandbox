@@ -15,8 +15,8 @@
         $ export YOUR_ACCESS_KEY=
         $ export YOUR_SECRET_KEY=
 
-        # localhost 起動
-        $ ruby -run -e httpd . -p 8000
+        # sinatra 起動
+        $ bundle exec ruby index.rb
 
 ## サンプル仕様メモ
 - 決済開始 = 画面あり
