@@ -14,6 +14,7 @@
         $ export YOUR_MERCHANT_ID=
         $ export YOUR_ACCESS_KEY=
         $ export YOUR_SECRET_KEY=
+        $ export YOUR_CLIENT_ID=
 
         # sinatra 起動
         $ bundle exec ruby hello_amznpay.rb
