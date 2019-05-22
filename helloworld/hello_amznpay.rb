@@ -11,5 +11,5 @@ get '/' do
 end
 
 get '/redirected' do
-  "Hello World"
+  "Redirected."
 end
