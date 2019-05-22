@@ -16,7 +16,7 @@
         $ export YOUR_SECRET_KEY=
 
         # sinatra 起動
-        $ bundle exec ruby index.rb
+        $ bundle exec ruby hello_amznpay.rb
 
 ## サンプル仕様メモ
 - 決済開始 = 画面あり

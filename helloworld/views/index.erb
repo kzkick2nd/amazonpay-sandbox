@@ -8,7 +8,7 @@
     <!-- 1. Add Amazon Script -->
     <script type='text/javascript'>
         window.onAmazonLoginReady = function () {
-            amazon.Login.setClientId('CLIENT-ID');
+            amazon.Login.setClientId("<%= @client_id %>");
         };
         window.onAmazonPaymentsReady = function () {
             showButton();
@@ -25,7 +25,7 @@
     <script type="text/javascript">
         function showButton() {
             var authRequest;
-            OffAmazonPayments.Button("AmazonPayButton", " SELLER-ID", {
+            OffAmazonPayments.Button("AmazonPayButton", "<%= @seller_id %>", {
                 type: "TYPE",
                 color: "COLOR",
                 size: "SIZE",
