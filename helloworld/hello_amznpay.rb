@@ -11,5 +11,5 @@ get '/' do
 end
 
 get '/redirected' do
-  "Redirected."
+  erb :redirected
 end
