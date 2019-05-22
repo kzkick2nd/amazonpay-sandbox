@@ -32,6 +32,10 @@
                 authorization: function () {
                     loginOptions = { scope: "SCOPES", popup: "POPUP-PARAMETER" };
                     authRequest = amazon.Login.authorize(loginOptions, "REDIRECT-URL");
+                },
+                onError: function (error) {
+                    // your error handling code.
+                    console.error(error.getErrorCode() + " - " + error.getErrorMessage())
                 }
             });
         };
