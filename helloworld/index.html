@@ -20,6 +20,21 @@
 
 </head>
 <body>
-    <h1>INIT</h1>
+    <h1>Hello AmazonPay</h1>
+    <div id="AmazonPayButton"></div>
+    <script type="text/javascript">
+        function showButton() {
+            var authRequest;
+            OffAmazonPayments.Button("AmazonPayButton", " SELLER-ID", {
+                type: "TYPE",
+                color: "COLOR",
+                size: "SIZE",
+                authorization: function () {
+                    loginOptions = { scope: "SCOPES", popup: "POPUP-PARAMETER" };
+                    authRequest = amazon.Login.authorize(loginOptions, "REDIRECT-URL");
+                }
+            });
+        };
+    </script>
 </body>
 </html>
