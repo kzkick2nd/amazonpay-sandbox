@@ -16,6 +16,23 @@ get '/' do
 end
 
 get '/logined' do
+
+  # https://github.com/amzn/amazon-pay-sdk-ruby#get-login-profile-api
+  login = AmazonPay::Login.new(
+    @client_id,
+    region: :jp,
+    sandbox: true
+  )
+
+  @login = login
+
+  # The access token is available in the return URL
+  # parameters after a user has logged in.
+  access_token = params['access_token']
+
+  # Make the 'get_user_info' api call.
+  @profile = login.get_login_profile(access_token)
+
   erb :logined
 end
 

@@ -8,7 +8,14 @@
 </head>
 <body>
     <h1>login with amazon?</h1>
-    <p>User profile is here.</p>
+    <p>User profile:</p>
+    <p>login後にqueryに乗っているAccessTokenを引数にとる。</p>
+    <p>AWSユニークID, 名前、Emailが取得できる。</p>
+    <ul>
+        <% @profile.each do |v| %>
+            <li><%= v %></li>
+        <% end %>
+    </ul>
     <div>
         <a href="/items">Next: select test payment.</a>
     </div>

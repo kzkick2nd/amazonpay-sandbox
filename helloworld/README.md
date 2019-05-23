@@ -1,5 +1,6 @@
 ## TODO
 - ユーザー情報の取得（ログイン時）
+    - ID, name, Email (optional: postal code)
 - ワンタイム
     - 決済の完了
     - レスポンス表示
