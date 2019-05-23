@@ -2,6 +2,7 @@
 - API = 上限ある？
     - 本番環境では、この処理の最大リクエストクォーターは10であり、回復レートは1秒間に1回です。SANDBOX環境では、最大リクエストクォーターは2であり、回復レートは2秒間に1回です。
         - https://developer.amazon.com/ja/docs/amazon-pay-api/setorderreferencedetails.html
+        - https://developer.amazon.com/ja/docs/eu/amazon-pay-api/throttling-limits.html
         - バッファは欲しい
 - https を必須とする箇所が多くローカル開発で注意が必要である。
 - BI 系どうする？
@@ -12,6 +13,10 @@
 - 同期オーソリ、非同期オーソリ
 - > response = client.client.get_merchant_account_status 間違いライン？
 - region を指定しないと deny される
+
+## URL
+- [Amazon Pay Self Check Sheet](https://pwa.geekylab.net/selfcheck/)
+- [オーソリ処理エラーのシミュレーション](https://pwa.geekylab.net/selfcheck/case03-001.html)
 
 ## Hello World
 0. 通常インテグレーションガイド
@@ -26,8 +31,8 @@
         $ export YOUR_SECRET_KEY=
         $ export YOUR_CLIENT_ID=
 
-        # sinatra 起動
-        $ bundle exec ruby hello_amznpay.rb
+        # local app 起動
+        $ bin/up
 
 ## サンプル仕様メモ
 - 認証許可 = amznログインをして許可をとる
