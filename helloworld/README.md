@@ -1,6 +1,7 @@
 ## TODO
 - ユーザー情報の取得（ログイン時）OK
     - ID, Name, Email (optional: postal code)
+    - [プロファイル情報の取得 | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-onetime/obtain-profile.html)
 - ワンタイム
     - 決済の完了
     - レスポンス表示

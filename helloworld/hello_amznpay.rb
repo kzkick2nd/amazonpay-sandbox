@@ -68,18 +68,32 @@ post '/pay_onetime' do
       store_name: 'CourtAndCherry.com'
   )
 
-  # # Making a call to the ConfirmOrderReference API
+  # Making a call to the ConfirmOrderReference API
   client.confirm_order_reference(amazon_order_reference_id)
 
-  # # Step5 Open Auth
-  authorization_reference_id = 'test_authorize_' + Time.now.to_s
+  # Step5 Open Auth
+  authorization_reference_id = 'auth_ref_id_' + Time.now.to_i.to_s
 
-  client.authorize(
+  res_auth = client.authorize(
       amazon_order_reference_id,
       authorization_reference_id,
       amount,
-      seller_authorization_note: 'Lorem ipsum dolor'
+      currency_code: 'JPY', # :jpy 指定しないと deny される
+      seller_authorization_note: 'Lorem ipsum dolor',
+      transaction_timeout: 0 # Set to 0 for synchronous mode
   )
+
+  amazon_authorization_id = res_auth.get_element('AuthorizeResponse/AuthorizeResult/AuthorizationDetails','AmazonAuthorizationId')
+
+  capture_reference_id = 'cap_ref_id_' + Time.now.to_i.to_s
+
+  res_cap = client.capture(
+    amazon_authorization_id,
+    capture_reference_id,
+    amount,
+    seller_capture_note: 'Lorem ipsum dolor'
+  )
+
 end
 
 get '/pay_auto' do
