@@ -1,6 +1,6 @@
 ## TODO
-- ユーザー情報の取得（ログイン時）
-    - ID, name, Email (optional: postal code)
+- ユーザー情報の取得（ログイン時）OK
+    - ID, Name, Email (optional: postal code)
 - ワンタイム
     - 決済の完了
     - レスポンス表示
@@ -12,7 +12,8 @@
     - レスポンス表示
     - 契約内容の参照
 - ユースケース
-    - ユーザーはログインしているか？
+    - ユーザーはログインしているか？ OK
+        - JS で確認し、ログイン状態はアプリ側で持つのが公式設定
     - ユーザーはどのプランを購読しているか？
 
 ## NOTE
@@ -30,6 +31,9 @@
 - 同期オーソリ、非同期オーソリ
 - > response = client.client.get_merchant_account_status 間違いライン？
 - region を指定しないと deny される
+- JS SDK は auth を session にキャッシュする
+    - When authorize receives a valid access token response, it automatically caches the token and associated metadata for reuse. This cache persists across page reloads and browser sessions. If a subsequent authorize call can be fulfilled by the cached token response, the SDK will reuse that token instead of requesting a new authorization. Use options.interactive to override this behavior.
+    - バックエンドだけで処理していいものか悩ましい
 
 ## URL
 - [Amazon Pay Self Check Sheet](https://pwa.geekylab.net/selfcheck/)
