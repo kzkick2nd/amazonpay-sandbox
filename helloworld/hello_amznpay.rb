@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
+require 'amazon_pay'
+
 before do
   @client_id   = ENV.fetch('YOUR_CLIENT_ID')
   @seller_id   = ENV.fetch('YOUR_MERCHANT_ID')
@@ -13,13 +15,19 @@ get '/' do
   erb :index
 end
 
-get '/redirected' do
-  erb :redirected
+get '/logined' do
+  erb :logined
 end
 
-post '/pay' do
-  require 'amazon_pay'
-  erb :pay
+get '/items' do
+  erb :items
+end
+
+get '/pay_onetime' do
+  erb :pay_onetime
+end
+
+post '/pay_onetime' do
   # Step4 Add Order Detail
   client = AmazonPay::Client.new(
       @merchant_id,
@@ -55,5 +63,11 @@ post '/pay' do
       amount,
       seller_authorization_note: 'Lorem ipsum dolor'
   )
+end
 
+get '/pay_auto' do
+  erb :pay_auto
+end
+
+post '/pay_onetime' do
 end
