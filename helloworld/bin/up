@@ -1,0 +1,7 @@
+#!/bin/bash
+cd `dirname $0`
+cd "../"
+
+echo -e "\n  Starting local server for testing AmazonPay...\n\n"
+
+(sleep 1; open http://localhost:4567/) & bundle exec ruby hello_amznpay.rb
