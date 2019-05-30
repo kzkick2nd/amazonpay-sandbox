@@ -1,5 +1,8 @@
+# encoding: utf-8
+
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/cookies'
 
 require 'amazon_pay'
 
@@ -16,22 +19,21 @@ get '/' do
 end
 
 get '/logined' do
+  @profile = {}
 
   # https://github.com/amzn/amazon-pay-sdk-ruby#get-login-profile-api
-  login = AmazonPay::Login.new(
+  @login = AmazonPay::Login.new(
     @client_id,
     region: :jp,
     sandbox: true
   )
 
-  @login = login
-
   # The access token is available in the return URL
   # parameters after a user has logged in.
-  access_token = params['access_token']
+  access_token = cookies[:amazon_Login_accessToken]
 
   # Make the 'get_user_info' api call.
-  @profile = login.get_login_profile(access_token)
+  @profile = @login.get_login_profile(access_token)
 
   erb :logined
 end
@@ -90,8 +92,7 @@ post '/pay_onetime' do
   res_cap = client.capture(
     amazon_authorization_id,
     capture_reference_id,
-    amount,
-    seller_capture_note: 'Lorem ipsum dolor'
+    amount
   )
 
 end
