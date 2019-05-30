@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Logined?</title>
+    <!-- ログイン情報をcookieに突っ込む実装は必要 -->
+    <!-- <script>
+        function getURLParameter(name, source) {
+            return decodeURIComponent((new RegExp('[?|&amp;|#]' + name + '=' +
+                '([^&;]+?)(&|#|;|$)').exec(source) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        }
+
+        var accessToken = getURLParameter("access_token", location.hash);
+        if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
+            document.cookie = "amazon_Login_accessToken=" + accessToken + ";path=/;secure";
+        }
+    </script> -->
 </head>
 <body>
     <h1>login with amazon?</h1>

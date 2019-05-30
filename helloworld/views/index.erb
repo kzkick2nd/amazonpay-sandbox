@@ -33,8 +33,10 @@
                     // scope https://developer.amazon.com/ja/docs/amazon-pay-onetime/button-widgets.html#scope
                     // popup https://developer.amazon.com/ja/docs/amazon-pay-onetime/button-widgets.html#popup
                     loginOptions = { scope: "profile", popup: true };
-                    amazon.Login.setUseCookie(true); // popup: true のときだけ amazon_Login_accessToken がcookieにセットされる
-                    amazon.Login.authorize(loginOptions, "http://localhost:4567/logined"); // NOTICE: 管理画面に設定必要。本番稼働では https が必須らしい
+                    amazon.Login.setUseCookie(true); // popup: true のときだけ amazon_Login_accessToken がcookieにセットされる。でも保持できず消える。localhostだけ？
+                    // amazon.Login.setSiteDomain("localhost");
+                    amazon.Login.authorize(loginOptions, "http://localhost:4567/logined"); // NOTICE: 管理画面に設定必要。本番稼働では https が必須らしい。
+                    // NOTE: 各種リダイレクトしたら処理をして再度リダイレクトする設計のほうがいいかもしんない。
                     // redirect https://developer.amazon.com/ja/docs/amazon-pay-onetime/button-widgets.html#%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88url
                 },
                 onError: function (error) {

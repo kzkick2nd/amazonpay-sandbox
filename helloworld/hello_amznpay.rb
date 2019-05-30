@@ -55,7 +55,7 @@ post '/pay_onetime' do
       region: :jp, # :jp 指定しないと deny される
       currency_code: :jpy, # :jpy 指定しないと deny される
       sandbox: true,
-      log_enabled: true
+      log_enabled: false # ログを出すとエンコーディングエラー吐く。日本語入ってるんかいな？ => 原因わかったらPR
   )
 
   amazon_order_reference_id = params[:orderReferenceId]
@@ -92,9 +92,23 @@ post '/pay_onetime' do
   res_cap = client.capture(
     amazon_authorization_id,
     capture_reference_id,
-    amount
+    amount,
+    seller_capture_note: 'Lorem ipsum dolor'
   )
 
+  client.close_order_reference(
+    amazon_order_reference_id
+  )
+
+  "
+  <h3>決済完了。メール飛んでるはず</h3>
+  <p>
+    authotization: #{amazon_authorization_id}<br>
+    capture: #{capture_reference_id}<br>
+    amount: #{amount}
+  </p>
+  <a href='/'>トップに戻る</a>
+  "
 end
 
 get '/pay_auto' do
