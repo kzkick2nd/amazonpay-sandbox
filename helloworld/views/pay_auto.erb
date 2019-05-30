@@ -29,14 +29,14 @@
     <div id="consentWidgetDiv"></div>
 
     <script type="text/javascript">
+        var billingAgreementId;
         function showWidget() {
             new OffAmazonPayments.Widgets.AddressBook({
             sellerId: "<%= @seller_id %>",
             agreementType: 'BillingAgreement',
 
             onReady: function(billingAgreement) {
-                var billingAgreementId = billingAgreement.
-                getAmazonBillingAgreementId();
+                billingAgreementId = billingAgreement.getAmazonBillingAgreementId();
             },
 
             onAddressSelect: function(billingAgreement) {
@@ -61,7 +61,7 @@
 
             new OffAmazonPayments.Widgets.Wallet({
                 sellerId: "<%= @seller_id %>",
-                amazonBillingAgreementId: amazonBillingAgreementId,
+                amazonBillingAgreementId: billingAgreementId,
                 onPaymentSelect: function(billingAgreement) {
                     // Replace this code with the action that you want to perform
                     // after the payment method is selected.
@@ -74,37 +74,38 @@
                     // Your error handling code.
                 }
             }).bind("walletWidgetDiv");
-        }
 
-        new OffAmazonPayments.Widgets.Consent({
-        sellerId: 'YOUR_SELLER_ID_HERE',
-        // amazonBillingAgreementId obtained from the Amazon Address Book widget.
-        amazonBillingAgreementId: amazonBillingAgreementId,
-        design: {
-            designMode: 'responsive'
-        },
-        onReady: function(billingAgreementConsentStatus){
-            // Called after widget renders
-            buyerBillingAgreementConsentStatus =
-            billingAgreementConsentStatus.getConsentStatus();
-            // getConsentStatus returns true or false
-            // true - checkbox is selected
-            // false - checkbox is unselected - default
-        },
-        onConsent: function(billingAgreementConsentStatus) {
-            buyerBillingAgreementConsentStatus =
-            billingAgreementConsentStatus.getConsentStatus();
-            // getConsentStatus returns true or false
-            // true - checkbox is selected - buyer has consented
-            // false - checkbox is unselected - buyer has not consented
+            new OffAmazonPayments.Widgets.Consent({
+                sellerId: "<%= @seller_id %>",
+                // amazonBillingAgreementId obtained from the Amazon Address Book widget.
+                amazonBillingAgreementId: billingAgreementId,
+                design: {
+                    designMode: 'responsive'
+                },
+                onReady: function(billingAgreementConsentStatus){
+                    // Called after widget renders
+                    buyerBillingAgreementConsentStatus =
+                    billingAgreementConsentStatus.getConsentStatus();
+                    // getConsentStatus returns true or false
+                    // true - checkbox is selected
+                    // false - checkbox is unselected - default
+                },
+                onConsent: function(billingAgreementConsentStatus) {
+                    buyerBillingAgreementConsentStatus =
+                    billingAgreementConsentStatus.getConsentStatus();
+                    // getConsentStatus returns true or false
+                    // true - checkbox is selected - buyer has consented
+                    // false - checkbox is unselected - buyer has not consented
 
-            // Replace this code with the action that you want to perform
-            // after the consent checkbox is selected/unselected.
-        },
-        onError: function(error) {
-            // your error handling code
+                    // Replace this code with the action that you want to perform
+                    // after the consent checkbox is selected/unselected.
+                },
+                onError: function(error) {
+                    // your error handling code
+                }
+            }).bind("consentWidgetDiv ");
+
         }
-        }).bind("consentWidgetDiv ");
 
     </script>
     <form action="/pay_onetime" method="POST">
