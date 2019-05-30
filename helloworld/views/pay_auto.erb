@@ -37,6 +37,8 @@
 
             onReady: function(billingAgreement) {
                 billingAgreementId = billingAgreement.getAmazonBillingAgreementId();
+                // ajax で認証し取得した Id を form に渡す
+                document.getElementById('billingAgreementId').value = billingAgreementId;
             },
 
             onAddressSelect: function(billingAgreement) {
@@ -108,9 +110,9 @@
         }
 
     </script>
-    <form action="/pay_onetime" method="POST">
-        <input type="hidden" id="orderReferenceId" name="orderReferenceId">
-        <input type="submit" value="決済POST">
+    <form action="/pay_auto" method="POST">
+        <input type="hidden" id="billingAgreementId" name="billingAgreementId">
+        <input type="submit" value="定期支払いPOST">
     </form>
 </body>
 </html>
