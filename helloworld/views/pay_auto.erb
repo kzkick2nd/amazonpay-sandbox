@@ -19,12 +19,14 @@
     <style type="text/css">
         #addressBookWidgetDiv{width: 400px; height: 228px;}
         #walletWidgetDiv {width: 400px; height: 228px;}
+        #consentWidgetDiv {width: 400px; height: 140px;}
     </style>
 
 </head>
 <body>
     <div id="addressBookWidgetDiv"></div>
     <div id="walletWidgetDiv"></div>
+    <div id="consentWidgetDiv"></div>
 
     <script type="text/javascript">
         function showWidget() {
@@ -73,6 +75,37 @@
                 }
             }).bind("walletWidgetDiv");
         }
+
+        new OffAmazonPayments.Widgets.Consent({
+        sellerId: 'YOUR_SELLER_ID_HERE',
+        // amazonBillingAgreementId obtained from the Amazon Address Book widget.
+        amazonBillingAgreementId: amazonBillingAgreementId,
+        design: {
+            designMode: 'responsive'
+        },
+        onReady: function(billingAgreementConsentStatus){
+            // Called after widget renders
+            buyerBillingAgreementConsentStatus =
+            billingAgreementConsentStatus.getConsentStatus();
+            // getConsentStatus returns true or false
+            // true - checkbox is selected
+            // false - checkbox is unselected - default
+        },
+        onConsent: function(billingAgreementConsentStatus) {
+            buyerBillingAgreementConsentStatus =
+            billingAgreementConsentStatus.getConsentStatus();
+            // getConsentStatus returns true or false
+            // true - checkbox is selected - buyer has consented
+            // false - checkbox is unselected - buyer has not consented
+
+            // Replace this code with the action that you want to perform
+            // after the consent checkbox is selected/unselected.
+        },
+        onError: function(error) {
+            // your error handling code
+        }
+        }).bind("consentWidgetDiv ");
+
     </script>
     <form action="/pay_onetime" method="POST">
         <input type="hidden" id="orderReferenceId" name="orderReferenceId">
