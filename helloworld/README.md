@@ -2,21 +2,13 @@
 - ユーザー情報の取得（ログイン時）OK
     - ID, Name, Email (optional: postal code)
     - [プロファイル情報の取得 | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-onetime/obtain-profile.html)
-- ワンタイム
-    - 決済の完了
-    - レスポンス表示
-    - 購入内容の参照
-- AutoPay
-    - 決済の完了
-    - 二回目決済の実行
-        - 自動実行
-    - レスポンス表示
-    - 契約内容の参照
+- ワンタイム OK
+- AutoPay OK
 - ユースケース
     - ユーザーはログインしているか？ OK
-        - JS で確認し、ログイン状態はアプリ側で持つのが公式設定
+        - JS で確認し、ログイン状態はアプリ側で持つのが良さそう
     - ユーザーはどのプランを購読しているか？
-
+        - 情報はとれるが、管理機能があるわけではないので自前で持つ必要があるな
 ## NOTE
 - API = 上限ある？
     - 本番環境では、この処理の最大リクエストクォーターは10であり、回復レートは1秒間に1回です。SANDBOX環境では、最大リクエストクォーターは2であり、回復レートは2秒間に1回です。
@@ -39,6 +31,14 @@
 ## URL
 - [Amazon Pay Self Check Sheet](https://pwa.geekylab.net/selfcheck/)
 - [オーソリ処理エラーのシミュレーション](https://pwa.geekylab.net/selfcheck/case03-001.html)
+- [PayAuto概要 | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-automatic/intro.html)
+- [amzn/amazon-pay-sdk-ruby: Amazon Pay Ruby SDK](https://github.com/amzn/amazon-pay-sdk-ruby)
+- [Amazon Payの実装でつまづきやすいこと一覧 - Qiita](https://qiita.com/shg10/items/71f1eba9653732a7b45f)
+- [Amazon Pay API Reference Guide | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-api/intro.html)
+- 英語のが最新 [Introduction | Amazon Pay](https://developer.amazon.com/docs/amazon-pay-api/intro.html)
+- Amazon Pay and Login with Amazon integration guide [Which guide do you use? | Amazon Pay](https://developer.amazon.com/docs/amazon-pay-onetime/intro.html)
+- Login with Amazon（LWA） [JavaScript用のLogin with Amazon SDKリファレンスガイド | Login with Amazon](https://developer.amazon.com/ja/docs/login-with-amazon/javascript-sdk-reference.html)
+- Amazon Pay インテグレーションガイド [プロファイル情報の取得 | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-onetime/obtain-profile.html#201953190)
 
 ## Hello World
 0. 通常インテグレーションガイド
@@ -59,15 +59,5 @@
 ## サンプル仕様メモ
 - 認証許可 = amznログインをして許可をとる
 - 決済開始 = widget利用可能
-- 初回決済 = 認証あり、通知は？
-- 二回目決済 = 認証なし、通知は？
-- 都度情報取得
-    - 管理者
-        - 一覧
-            - 絞り込み？
-        - 詳細
-            - 決済履歴
-            - ステータス
-    - ユーザー
-        - 現在ステータス
-        - 退会
+- 初回決済 = 認証あり、通知はメール
+- 二回目決済 = 認証なし、通知はメール
