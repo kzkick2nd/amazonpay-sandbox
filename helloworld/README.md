@@ -1,3 +1,16 @@
+localhost で起動する AmazonPay 仕様確認アプリ。
+
+loocalhostで動かす場合、ログイン cookie の保持が仕様上難しいらしいので、ログイン周りでエラーでたらログアウトして再チャレンジ。
+
+    # 環境変数で各種キー渡すこと
+    $ export YOUR_MERCHANT_ID=
+    $ export YOUR_ACCESS_KEY=
+    $ export YOUR_SECRET_KEY=
+    $ export YOUR_CLIENT_ID=
+
+    $ bundle install
+    $ bin/up
+
 ## TODO
 - ユーザー情報の取得（ログイン時）OK
     - ID, Name, Email (optional: postal code)
@@ -45,16 +58,6 @@
     - [Step 1:登録 | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-onetime/register.html)
 0. 付録インテグレーションガイド
     - [ログイン時での注文情報へのアクセス | Amazon Pay Japan](https://developer.amazon.com/ja/docs/amazon-pay-onetime/accessing-order-information.html)
-
-## CONF, OPT
-        # 環境変数で各種キー渡すこと
-        $ export YOUR_MERCHANT_ID=
-        $ export YOUR_ACCESS_KEY=
-        $ export YOUR_SECRET_KEY=
-        $ export YOUR_CLIENT_ID=
-
-        # local app 起動
-        $ bin/up
 
 ## サンプル仕様メモ
 - 認証許可 = amznログインをして許可をとる
