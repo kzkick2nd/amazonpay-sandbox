@@ -167,7 +167,7 @@ post '/pay_auto' do
   )
 
   # Set the amount for your first authorization.
-  amount = '10.00'
+  amount = '980'
 
   # Set a unique authorization reference id for your
   # first transaction on the billing agreement.
@@ -196,31 +196,121 @@ post '/pay_auto' do
     custom_information: 'Additional Information'
   )
 
-  # You will need the Amazon Authorization Id from the
-  # AuthorizeOnBillingAgreement API response if you decide
-  # to make the Capture API call separately.
-  amazon_authorization_id = res.get_element('AuthorizeOnBillingAgreementResponse/AuthorizeOnBillingAgreementResult/AuthorizationDetails','AmazonAuthorizationId')
+  # # You will need the Amazon Authorization Id from the
+  # # AuthorizeOnBillingAgreement API response if you decide
+  # # to make the Capture API call separately.
+  # amazon_authorization_id = res.get_element('AuthorizeOnBillingAgreementResponse/AuthorizeOnBillingAgreementResult/AuthorizationDetails','AmazonAuthorizationId')
 
-  # Set a unique id for your current capture of
-  # this payment.
-  capture_reference_id = 'Your Unique Id'
+  # # Set a unique id for your current capture of
+  # # this payment.
+  # capture_reference_id = 'Your Unique Id'
 
-  # Make the Capture API call if you did not set the
-  # 'capture_now' parameter to 'true'. There are
-  # additional optional parameters that are not used
-  # below.
-  client.capture(
-    amazon_authorization_id,
-    capture_reference_id,
-    amount,
-    currency_code: 'USD', # Default: USD
-    seller_capture_note: 'Your Capture Note'
+  # # Make the Capture API call if you did not set the
+  # # 'capture_now' parameter to 'true'. There are
+  # # additional optional parameters that are not used
+  # # below.
+  # client.capture(
+  #   amazon_authorization_id,
+  #   capture_reference_id,
+  #   amount,
+  #   currency_code: 'JPY',s
+  #   seller_capture_note: 'Your Capture Note'
+  # )
+
+  # # The following API call should not be made until you
+  # # are ready to terminate the billing agreement.
+  # client.close_billing_agreement(
+  #   amazon_billing_agreement_id,
+  #   closure_reason: 'Reason For Closing'
+  # )
+
+  "
+  <h3>定期許可と同時に決済完了。メール飛んでるはず</h3>
+  <p>amazon_billing_agreement_idを利用すると再決済できる</p>
+  <p>
+    amazon_billing_agreement_id: #{amazon_billing_agreement_id}<br>
+    amount: #{amount}
+  </p>
+  <h4>再請求をする</h4>
+  <form action='/re_pay' method='POST'>
+    <input type='text' id='billingAgreementId' name='billingAgreementId' value='#{amazon_billing_agreement_id}'>
+    <br>
+    Amount: <input type='text' id='amount' name='amount' value='980'>
+    <br>
+    Note: <input type='text' id='billingNote' name='billingNote' value='Your Authorization Note'>
+    <br>
+    <input type='submit' value='定期支払い再請求'>
+  </form>
+  <a href='/'>トップに戻る</a>
+  "
+end
+
+get '/re_pay' do
+  "
+  <h3>再度決済</h3>
+  <p>amazon_billing_agreement_idを利用すると再決済できる</p>
+  <form action='/re_pay' method='POST'>
+    billingAgreementId: <input type='text' id='billingAgreementId' name='billingAgreementId' value=''>
+    <br>
+    Amount: <input type='text' id='amount' name='amount' value='980'>
+    <br>
+    Note: <input type='text' id='billingNote' name='billingNote' value='Your Authorization Note'>
+    <br>
+    <input type='submit' value='定期支払い再請求'>
+  </form>
+  <a href='/'>トップに戻る</a>
+  "
+end
+
+post '/re_pay' do
+  client = AmazonPay::Client.new(
+    @merchant_id,
+    @access_key,
+    @secret_key,
+    sandbox: true,
+    region: :jp, # :jp 指定しないと deny される
+    currency_code: :jpy, # :jpy 指定しないと deny される
+    log_enabled: false
   )
 
-  # The following API call should not be made until you
-  # are ready to terminate the billing agreement.
-  client.close_billing_agreement(
+  # 販売者NOTE必要？
+
+  amazon_billing_agreement_id = params[:billingAgreementId]
+  amount = params[:billingNote]
+  amount = params[:amount]
+
+  authorization_reference_id = 'bill_ref_id_' + Time.now.to_i.to_s
+
+  seller_authorization_note = client.authorize_on_billing_agreement(
     amazon_billing_agreement_id,
-    closure_reason: 'Reason For Closing'
+    authorization_reference_id,
+    amount,
+    currency_code: 'JPY', # :jpy 指定しないと deny される
+    seller_authorization_note: 'Your Authorization Note',
+    transaction_timeout: 0, # Set to 0 for synchronous mode
+    capture_now: true, # Set this to true if you want to capture the amount in the same API call
+    seller_note: 'Your Seller Note',
+    seller_order_id: 'Your Order Id',
+    store_name: 'Your Store Name',
+    custom_information: 'Additional Information'
   )
+  "
+  <h3>再度決済完了。メール飛んでるはず</h3>
+  <p>amazon_billing_agreement_idを利用すると再決済できる</p>
+  <p>
+    amazon_billing_agreement_id: #{amazon_billing_agreement_id}<br>
+    amount: #{amount}
+  </p>
+  <h4>再請求をする</h4>
+  <form action='/re_pay' method='POST'>
+    <input type='text' id='billingAgreementId' name='billingAgreementId' value='#{amazon_billing_agreement_id}'>
+    <br>
+    Amount: <input type='text' id='amount' name='amount' value='980'>
+    <br>
+    Note: <input type='text' id='billingNote' name='billingNote' value='Your Authorization Note'>
+    <br>
+    <input type='submit' value='定期支払い再請求'>
+  </form>
+  <a href='/'>トップに戻る</a>
+  "
 end
